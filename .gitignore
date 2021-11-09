@@ -1,0 +1,17 @@
+### IntelliJ ###
+.idea/
+*.ipr
+*.iws
+*.iml
+
+### Gradle ###
+.gradle/
+build/
+
+### Java ###
+*.jar
+
+### Kotest ###
+.kotlintest/
+
+### Project Specific ###
