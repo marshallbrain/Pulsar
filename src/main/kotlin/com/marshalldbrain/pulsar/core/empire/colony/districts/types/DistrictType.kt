@@ -1,6 +1,6 @@
 package com.marshalldbrain.pulsar.core.empire.colony.districts.types
 
-import com.marshalldbrain.pulsar.core.resources.types.ResourceType
+import com.marshalldbrain.pulsar.core.resource.types.ResourceType
 
 interface DistrictType {
 	val id: String

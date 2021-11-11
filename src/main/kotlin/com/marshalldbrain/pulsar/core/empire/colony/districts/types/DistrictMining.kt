@@ -1,7 +1,7 @@
 package com.marshalldbrain.pulsar.core.empire.colony.districts.types
 
-import com.marshalldbrain.pulsar.core.resources.types.ResourceMineral
-import com.marshalldbrain.pulsar.core.resources.types.ResourceType
+import com.marshalldbrain.pulsar.core.resource.types.ResourceMineral
+import com.marshalldbrain.pulsar.core.resource.types.ResourceType
 
 object DistrictMining: DistrictType {
 	override val id = "mining"

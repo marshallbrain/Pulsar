@@ -1,6 +1,7 @@
 package com.marshalldbrain.pulsar.core.resource
 
 import com.marshalldbrain.pulsar.core.resources.types.ResourceMineral
+import com.marshalldbrain.pulsar.core.resource.types.ResourceMineral
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 

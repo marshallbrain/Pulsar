@@ -1,7 +1,7 @@
 package com.marshalldbrain.pulsar.core.resource
 
 import com.marshalldbrain.pulsar.core.modifiers.ModifierGroup
-import com.marshalldbrain.pulsar.core.resources.types.ResourceType
+import com.marshalldbrain.pulsar.core.resource.types.ResourceType
 
 class ResourceBucket {
 

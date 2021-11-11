@@ -2,7 +2,7 @@ package com.marshalldbrain.pulsar.core.empire.colony
 
 import com.marshalldbrain.pulsar.core.empire.colony.districts.types.DistrictMining
 import com.marshalldbrain.pulsar.core.empire.colony.districts.types.DistrictType
-import com.marshalldbrain.pulsar.core.resources.types.ResourceMineral
+import com.marshalldbrain.pulsar.core.resource.types.ResourceMineral
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.maps.shouldContainExactly
 import io.kotest.matchers.shouldBe
