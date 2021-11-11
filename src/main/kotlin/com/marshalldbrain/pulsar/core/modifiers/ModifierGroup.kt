@@ -1,27 +1,43 @@
 package com.marshalldbrain.pulsar.core.modifiers
 
-import kotlin.math.max
+import com.marshalldbrain.pulsar.core.scope.modifier.ScopeMod
 
-class ModifierGroup (
-	modifierBuilder: (MutableMap<String, MutableMap<String, Double>>) -> Unit
+class ModifierGroup(
+	parentList: List<MutableMap<Modifiable, MutableMap<Set<Modifiable>, Double>>>
 ) {
 	
-	val modifierList = buildMap<String, MutableMap<String, Double>>(modifierBuilder).toMutableMap()
-	
-	fun reduce(targetModifier: String, amount: Double): Double {
-		return ModifierReducer.reduce(modifierList, targetModifier, amount)
+	private val modifierList = mutableMapOf<Modifiable, MutableMap<Set<Modifiable>, Double>>()
+	private val parentModifiers = parentList.toMutableList().also {
+		it.add(modifierList)
 	}
 	
-}
-
-fun MutableMap<String, MutableMap<String, Double>>.create(key: String, value: Double) {
-	
-	val index = max(key.lastIndexOf("."), 0)
-	val limiters = this.getOrElse(key.drop(index).removePrefix(".")) {
-		mutableMapOf(Pair("", 0.0)).also { this[key.drop(index).removePrefix(".")] = it }
+	fun createChildGroup(scope: ScopeMod): ModifierGroup {
+		return Modifiers.createGroup(
+			scope,
+			parentModifiers.toMutableList()
+		)
 	}
-	limiters.compute(key.take(index)) {
-			_, v -> if (v == null) value else v + value
+	
+	fun createModifier(amount: Double, root: Modifiable, limiters: Set<Modifiable>) {
+		modifierList.getOrPut(root) {
+			mutableMapOf()
+		}[limiters] = amount
+	}
+	
+	fun applyModifiers(
+		amount: Double,
+		target: Modifiable,
+		properties: Set<Modifiable>
+	): Double {
+		
+		return parentModifiers.sumOf { map ->
+			map.getOrDefault(
+				target, mutableMapOf()
+			).filterKeys {
+				properties.containsAll(it)
+			}.values.sum() * amount
+		} + amount
+		
 	}
 	
 }
