@@ -1,5 +1,7 @@
 package com.marshalldbrain.pulsar.core.resources.types
 
-object ResourceMineral: ResourceType(
-	"mineral"
-)
+import com.marshalldbrain.pulsar.core.ion.ID
+
+object ResourceMineral: ResourceType {
+	override val id = "mineral"
+}
