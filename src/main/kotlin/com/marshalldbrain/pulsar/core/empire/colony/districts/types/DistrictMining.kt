@@ -1,6 +1,5 @@
 package com.marshalldbrain.pulsar.core.empire.colony.districts.types
 
-import com.marshalldbrain.pulsar.core.ion.ID
 import com.marshalldbrain.pulsar.core.resources.types.ResourceMineral
 import com.marshalldbrain.pulsar.core.resources.types.ResourceType
 
