@@ -1,8 +1,10 @@
 package com.marshalldbrain.pulsar.core.resource
 
-import com.marshalldbrain.pulsar.core.resources.types.ResourceMineral
+import com.marshalldbrain.pulsar.core.modifiers.Modifiers
 import com.marshalldbrain.pulsar.core.resource.types.ResourceMineral
+import com.marshalldbrain.pulsar.core.util.HelperClasses
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.maps.shouldContain
 import io.kotest.matchers.shouldBe
 
 class ResourceTest : FunSpec({
@@ -44,6 +46,21 @@ class ResourceTest : FunSpec({
 		resourceBucket.add(ResourceMineral, 5)
 		
 		resourceBucket.get(ResourceMineral) shouldBe 10
+		
+	}
+	
+	test("Apply modifiers") {
+		
+		val scope = HelperClasses.TestScope()
+		val group = Modifiers.createGroup(scope)
+		val resourceBucket = ResourceBucket()
+		Modifiers.createModifier(scope, 0.1, ResourceMineral)
+		resourceBucket.add(ResourceMineral, 10)
+		
+		resourceBucket.applyModifiers(group, emptySet())
+		
+		resourceBucket.resourceBucket shouldContain Pair(ResourceMineral, 11)
+		resourceBucket.resourceBucket.size shouldBe 1
 		
 	}
 	

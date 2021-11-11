@@ -1,5 +1,6 @@
 package com.marshalldbrain.pulsar.core.resource
 
+import com.marshalldbrain.pulsar.core.modifiers.Modifiable
 import com.marshalldbrain.pulsar.core.modifiers.ModifierGroup
 import com.marshalldbrain.pulsar.core.resource.types.ResourceType
 
@@ -9,23 +10,7 @@ class ResourceBucket {
 	val resourceBucket: Map<ResourceType, Int>
 		get() = _resourceBucket
 	
-	operator fun plus(pair: Pair<ResourceType, Int>) {
-		add(pair.first, pair.second)
-	}
-	
-	operator fun plus(resources: Map<ResourceType, Int>) {
-		addAll(resources)
-	}
-	
-	operator fun minus(pair: Pair<ResourceType, Int>) {
-		take(pair.first, pair.second)
-	}
-	
-	operator fun minus(resources: Map<ResourceType, Int>) {
-		takeAll(resources)
-	}
-	
-	fun get(key: ResourceType): Int? {
+	fun get(key: ResourceType): Int {
 		return _resourceBucket.getOrDefault(key, 0)
 	}
 	
@@ -50,6 +35,12 @@ class ResourceBucket {
 	fun takeAll(from: Map<out ResourceType, Int>) {
 		from.forEach() {
 			add(it.key, it.value)
+		}
+	}
+	
+	fun applyModifiers(group: ModifierGroup, modifiables: Set<Modifiable>) {
+		_resourceBucket.replaceAll() { type, amount ->
+			group.applyModifiers(amount, type, modifiables).toInt()
 		}
 	}
 	

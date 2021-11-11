@@ -1,9 +1,7 @@
 package com.marshalldbrain.pulsar.core.empire.colony
 
 import com.marshalldbrain.pulsar.core.empire.colony.districts.types.DistrictType
-import com.marshalldbrain.pulsar.core.modifiers.Modifiers
 import com.marshalldbrain.pulsar.core.resource.types.ResourceType
-import com.marshalldbrain.pulsar.core.scope.modifier.ScopeMod
 
 class Colony(
 	val districts: Map<DistrictType, Int>

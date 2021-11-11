@@ -7,7 +7,7 @@ import com.marshalldbrain.pulsar.core.scope.modifier.ScopeMod
 object HelperClasses {
 	
 	class TestScope: ScopeMod
-	class TestModifiable(override val modId: String): Modifiable
+	class TestModifiable(override val id: String): Modifiable
 	class TestBuildable(override val cost: Int): Buildable
 	
 }

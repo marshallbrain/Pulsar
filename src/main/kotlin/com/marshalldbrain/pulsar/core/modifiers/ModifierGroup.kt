@@ -25,7 +25,7 @@ class ModifierGroup(
 	}
 	
 	fun applyModifiers(
-		amount: Double,
+		amount: Number,
 		target: Modifiable,
 		properties: Set<Modifiable>
 	): Double {
@@ -35,9 +35,15 @@ class ModifierGroup(
 				target, mutableMapOf()
 			).filterKeys {
 				properties.containsAll(it)
-			}.values.sum() * amount
-		} + amount
+			}.values.sum() * amount.toDouble()
+		} + amount.toDouble()
 		
+	}
+	
+	fun apply(
+		properties: Set<Modifiable>
+	): Pair<ModifierGroup, Set<Modifiable>> {
+		return Pair(this, properties)
 	}
 	
 }

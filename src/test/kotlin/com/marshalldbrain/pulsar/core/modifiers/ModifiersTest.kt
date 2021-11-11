@@ -1,5 +1,6 @@
 package com.marshalldbrain.pulsar.core.modifiers
 
+import com.marshalldbrain.pulsar.core.resource.ResourceBucket
 import com.marshalldbrain.pulsar.core.scope.modifier.ScopeMod
 import com.marshalldbrain.pulsar.core.util.HelperClasses
 import io.kotest.core.spec.style.FunSpec
