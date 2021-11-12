@@ -8,16 +8,15 @@ object Modifiers {
 	
 	fun createModifier(
 		scope: ScopeMod,
-		amount: Double,
 		root: Modifiable,
 		limiters: Set<Modifiable> = emptySet()
-	) {
-			modifierGroups[scope]?.createModifier(amount, root, limiters)
+	): ModifierCalc.MutableCell {
+			return modifierGroups[scope]!!.createModifier(root, limiters)
 	}
 	
 	fun createGroup(
 		scope: ScopeMod,
-		parentModifiers: List<MutableMap<Modifiable, MutableMap<Set<Modifiable>, Double>>> = mutableListOf()
+		parentModifiers: List<MutableMap<Modifiable, MutableMap<Set<Modifiable>, ModifierCalc>>> = mutableListOf()
 	): ModifierGroup {
 		return ModifierGroup(parentModifiers).also {
 			modifierGroups[scope] = it

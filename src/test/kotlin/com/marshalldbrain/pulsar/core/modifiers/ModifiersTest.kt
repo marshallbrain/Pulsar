@@ -19,7 +19,8 @@ class ModifiersTest : FunSpec({
 		test("Correct scope") {
 			
 			val group = Modifiers.createGroup(scope1)
-			Modifiers.createModifier(scope1, 0.1, modRoot)
+			val cell = Modifiers.createModifier(scope1, modRoot)
+			cell.multiplier = 0.1
 			
 			group.applyModifiers(10.0, modRoot, emptySet()) shouldBe 11
 			
@@ -30,7 +31,7 @@ class ModifiersTest : FunSpec({
 			val scope2 = HelperClasses.TestScope()
 			
 			val group = Modifiers.createGroup(scope2)
-			Modifiers.createModifier(scope1, 0.1, modRoot)
+			Modifiers.createModifier(scope1, modRoot).multiplier = 0.1
 			
 			group.applyModifiers(10.0, modRoot, emptySet()) shouldBe 10
 			
@@ -43,9 +44,9 @@ class ModifiersTest : FunSpec({
 		test("Single apply") {
 			
 			val group = Modifiers.createGroup(scope1)
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod1, mod2, mod3
-			))
+			)).multiplier = 0.1
 			
 			group.applyModifiers(10.0, modRoot, setOf(mod1, mod2, mod3)) shouldBe 11
 			
@@ -54,19 +55,19 @@ class ModifiersTest : FunSpec({
 		test("All limiters") {
 			
 			val group = Modifiers.createGroup(scope1)
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod1
-			))
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			)).multiplier = 0.1
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod1, mod2
-			))
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			)).multiplier = 0.1
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod2, mod3
-			))
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			)).multiplier = 0.1
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod1, mod2, mod3
-			))
-			Modifiers.createModifier(scope1, 0.1, modRoot)
+			)).multiplier = 0.1
+			Modifiers.createModifier(scope1, modRoot).multiplier = 0.1
 			
 			group.applyModifiers(10.0, modRoot, setOf(mod1, mod2, mod3)) shouldBe 15
 			
@@ -75,19 +76,19 @@ class ModifiersTest : FunSpec({
 		test("Some apply") {
 			
 			val group = Modifiers.createGroup(scope1)
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod1
-			))
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			)).multiplier = 0.1
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod1, mod2
-			))
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			)).multiplier = 0.1
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod2, mod3
-			))
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			)).multiplier = 0.1
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod1, mod2, mod3
-			))
-			Modifiers.createModifier(scope1, 0.1, modRoot)
+			)).multiplier = 0.1
+			Modifiers.createModifier(scope1, modRoot).multiplier = 0.1
 			
 			group.applyModifiers(10.0, modRoot, setOf(mod1, mod2)) shouldBe 13
 			
@@ -96,18 +97,18 @@ class ModifiersTest : FunSpec({
 		test("None apply") {
 			
 			val group = Modifiers.createGroup(scope1)
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod1
-			))
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			)).multiplier = 0.1
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod1, mod2
-			))
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			)).multiplier = 0.1
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod2, mod3
-			))
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			)).multiplier = 0.1
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod1, mod2, mod3
-			))
+			)).multiplier = 0.1
 			
 			group.applyModifiers(10.0, modRoot, emptySet()) shouldBe 10
 			
@@ -124,12 +125,12 @@ class ModifiersTest : FunSpec({
 			val group1 = Modifiers.createGroup(scope1)
 			val group2 = group1.createChildGroup(scope2)
 			
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod1
-			))
-			Modifiers.createModifier(scope2, 0.1, modRoot, setOf(
+			)).multiplier = 0.1
+			Modifiers.createModifier(scope2, modRoot, setOf(
 				mod2
-			))
+			)).multiplier = 0.1
 			
 			group2.applyModifiers(10.0, modRoot, setOf(
 				mod1, mod2
@@ -140,14 +141,14 @@ class ModifiersTest : FunSpec({
 		test("Parents not modified") {
 			
 			val group1 = Modifiers.createGroup(scope1)
-			val group2 = group1.createChildGroup(scope2)
+			group1.createChildGroup(scope2)
 			
-			Modifiers.createModifier(scope1, 0.1, modRoot, setOf(
+			Modifiers.createModifier(scope1, modRoot, setOf(
 				mod1
-			))
-			Modifiers.createModifier(scope2, 0.1, modRoot, setOf(
+			)).multiplier = 0.1
+			Modifiers.createModifier(scope2, modRoot, setOf(
 				mod2
-			))
+			)).multiplier = 0.1
 			
 			group1.applyModifiers(10.0, modRoot, setOf(
 				mod1, mod2

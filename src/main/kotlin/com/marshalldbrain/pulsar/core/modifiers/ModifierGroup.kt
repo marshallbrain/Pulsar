@@ -3,10 +3,10 @@ package com.marshalldbrain.pulsar.core.modifiers
 import com.marshalldbrain.pulsar.core.scope.modifier.ScopeMod
 
 class ModifierGroup(
-	parentList: List<MutableMap<Modifiable, MutableMap<Set<Modifiable>, Double>>>
+	parentList: List<MutableMap<Modifiable, MutableMap<Set<Modifiable>, ModifierCalc>>>
 ) {
 	
-	private val modifierList = mutableMapOf<Modifiable, MutableMap<Set<Modifiable>, Double>>()
+	private val modifierList = mutableMapOf<Modifiable, MutableMap<Set<Modifiable>, ModifierCalc>>()
 	private val parentModifiers = parentList.toMutableList().also {
 		it.add(modifierList)
 	}
@@ -18,10 +18,11 @@ class ModifierGroup(
 		)
 	}
 	
-	fun createModifier(amount: Double, root: Modifiable, limiters: Set<Modifiable>) {
-		modifierList.getOrPut(root) {
+	fun createModifier(root: Modifiable, limiters: Set<Modifiable>): ModifierCalc.MutableCell {
+		val calc = modifierList.getOrPut(root) {
 			mutableMapOf()
-		}[limiters] = amount
+		}.getOrPut(limiters) {ModifierCalc()}
+		return calc.createCell()
 	}
 	
 	fun applyModifiers(
@@ -35,7 +36,9 @@ class ModifierGroup(
 				target, mutableMapOf()
 			).filterKeys {
 				properties.containsAll(it)
-			}.values.sum() * amount.toDouble()
+			}.values.fold(ModifierCalc.Cell()) { c, v ->
+				c + v.cell
+			} * amount
 		} + amount.toDouble()
 		
 	}

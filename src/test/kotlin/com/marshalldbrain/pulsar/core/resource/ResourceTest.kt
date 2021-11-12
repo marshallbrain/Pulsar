@@ -54,7 +54,7 @@ class ResourceTest : FunSpec({
 		val scope = HelperClasses.TestScope()
 		val group = Modifiers.createGroup(scope)
 		val resourceBucket = ResourceBucket()
-		Modifiers.createModifier(scope, 0.1, ResourceMineral)
+		Modifiers.createModifier(scope, ResourceMineral).multiplier = 0.1
 		resourceBucket.add(ResourceMineral, 10)
 		
 		resourceBucket.applyModifiers(group, emptySet())
