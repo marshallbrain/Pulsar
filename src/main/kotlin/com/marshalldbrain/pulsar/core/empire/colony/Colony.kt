@@ -1,17 +1,27 @@
 package com.marshalldbrain.pulsar.core.empire.colony
 
+import com.marshalldbrain.pulsar.core.empire.colony.construction.BuildCoordinator
+import com.marshalldbrain.pulsar.core.empire.colony.construction.BuildOrder
+import com.marshalldbrain.pulsar.core.empire.colony.construction.Buildable
 import com.marshalldbrain.pulsar.core.empire.colony.districts.types.DistrictType
 import com.marshalldbrain.pulsar.core.resource.types.ResourceType
 
 class Colony(
-	val districts: Map<DistrictType, Int>
+	districts: Map<DistrictType, Int> = mapOf()
 ) {
 	
-	val maxPopulation = 0
-	val maxDistricts = 0
-	val maxBuildings = 0
+	private val builder = BuildCoordinator(this::build)
+	private val districts = districts.toMutableMap()
 	
 	var population = 0
+	
+	fun createBuildOrder(buildable: Buildable, amount: Int) {
+		builder.addOrder(BuildOrder(buildable, amount))
+	}
+	
+	fun tick(delta: Int) {
+		builder.process(delta)
+	}
 	
 	fun getProduction(): Map<ResourceType, Int> {
 		
@@ -27,6 +37,19 @@ class Colony(
 			}
 		}
 		return resourceMap
+	}
+	
+	private fun build(buildable: Buildable) {
+		when(buildable) {
+			is DistrictType -> districts[buildable] =
+				districts.getOrDefault(buildable, 0) + 1
+		}
+	}
+	
+	companion object {
+		private val maxPopulation = 10
+		private val maxDistricts = 4
+		private val maxBuildings = 10
 	}
 	
 }

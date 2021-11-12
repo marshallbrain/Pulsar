@@ -9,12 +9,27 @@ import io.kotest.matchers.shouldBe
 
 class ColonyTest : FunSpec({
 	
-	test("District creation") {
+	test("District production") {
 		
 		val colony = Colony(
 			mapOf(Pair(DistrictMining, 4))
 		)
 		
+		val production = colony.getProduction()
+		
+		production.shouldContainExactly(
+			mapOf(
+				Pair(ResourceMineral, 16)
+			)
+		)
+		
+	}
+	
+	test("Build district") {
+		
+		val colony = Colony()
+		colony.createBuildOrder(DistrictMining, 4)
+		colony.tick(4)
 		val production = colony.getProduction()
 		
 		production.shouldContainExactly(

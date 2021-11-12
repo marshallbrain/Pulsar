@@ -1,6 +1,8 @@
 package com.marshalldbrain.pulsar.core.empire.colony.construction
 
-class BuildCoordinator {
+class BuildCoordinator(
+	private val onComplete: (Buildable) -> Unit
+) {
 
 	private val _buildQueue = mutableListOf<BuildOrder>()
 	val buildQueue: List<BuildOrder>
@@ -15,6 +17,7 @@ class BuildCoordinator {
 		while (remaining > 0 && _buildQueue.isNotEmpty()) {
 			remaining = _buildQueue[0].process(remaining)
 			if (remaining >= 0) {
+				onComplete.invoke(buildQueue[0].buildable)
 				if(_buildQueue[0].build()) {
 					_buildQueue.removeFirst()
 				}

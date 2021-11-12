@@ -13,7 +13,7 @@ class BuildTest : FunSpec({
 		test("Add order") {
 			
 			val buildable = BuildOrder(HelperClasses.TestBuildable(1))
-			val build = BuildCoordinator()
+			val build = BuildCoordinator {}
 			
 			build.addOrder(buildable)
 			
@@ -24,7 +24,7 @@ class BuildTest : FunSpec({
 		test("Build single") {
 			
 			val buildable = BuildOrder(HelperClasses.TestBuildable(1))
-			val build = BuildCoordinator()
+			val build = BuildCoordinator {}
 			
 			build.addOrder(buildable)
 			build.process(1)
@@ -37,7 +37,7 @@ class BuildTest : FunSpec({
 		test("Build incomplete") {
 			
 			val buildable = BuildOrder(HelperClasses.TestBuildable(2))
-			val build = BuildCoordinator()
+			val build = BuildCoordinator {}
 			
 			build.addOrder(buildable)
 			build.process(1)
@@ -51,7 +51,7 @@ class BuildTest : FunSpec({
 		test("Overbuild") {
 			
 			val buildable = BuildOrder(HelperClasses.TestBuildable(2),2)
-			val build = BuildCoordinator()
+			val build = BuildCoordinator {}
 			
 			build.addOrder(buildable)
 			build.process(3)
@@ -63,7 +63,7 @@ class BuildTest : FunSpec({
 		test("Multiple amount") {
 			
 			val buildable = BuildOrder(HelperClasses.TestBuildable(1), 2)
-			val build = BuildCoordinator()
+			val build = BuildCoordinator {}
 			
 			build.addOrder(buildable)
 			build.process(3)
@@ -75,7 +75,7 @@ class BuildTest : FunSpec({
 		test("Multiple amount overbuild") {
 			
 			val buildable = BuildOrder(HelperClasses.TestBuildable(1), 3)
-			val build = BuildCoordinator()
+			val build = BuildCoordinator {}
 			
 			build.addOrder(buildable)
 			build.process(2)
@@ -92,7 +92,7 @@ class BuildTest : FunSpec({
 			
 			val buildable1 = BuildOrder(HelperClasses.TestBuildable(1))
 			val buildable2 = BuildOrder(HelperClasses.TestBuildable(1))
-			val build = BuildCoordinator()
+			val build = BuildCoordinator {}
 			
 			build.addOrder(buildable1)
 			build.addOrder(buildable2)
@@ -106,7 +106,7 @@ class BuildTest : FunSpec({
 			
 			val buildable1 = BuildOrder(HelperClasses.TestBuildable(1))
 			val buildable2 = BuildOrder(HelperClasses.TestBuildable(2))
-			val build = BuildCoordinator()
+			val build = BuildCoordinator {}
 			
 			build.addOrder(buildable1)
 			build.addOrder(buildable2)
@@ -121,7 +121,7 @@ class BuildTest : FunSpec({
 			
 			val buildable1 = BuildOrder(HelperClasses.TestBuildable(1))
 			val buildable2 = BuildOrder(HelperClasses.TestBuildable(1))
-			val build = BuildCoordinator()
+			val build = BuildCoordinator {}
 			
 			build.addOrder(buildable1)
 			build.addOrder(buildable2)
