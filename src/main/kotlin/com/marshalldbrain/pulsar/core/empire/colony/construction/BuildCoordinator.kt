@@ -17,7 +17,7 @@ class BuildCoordinator(
 		while (remaining > 0 && _buildQueue.isNotEmpty()) {
 			remaining = _buildQueue[0].process(remaining)
 			if (remaining >= 0) {
-				onComplete.invoke(buildQueue[0].buildable)
+				onComplete.invoke(_buildQueue[0].buildable)
 				if(_buildQueue[0].build()) {
 					_buildQueue.removeFirst()
 				}
