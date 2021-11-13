@@ -8,6 +8,6 @@ object HelperClasses {
 	
 	class TestScope: ScopeMod
 	class TestModifiable(override val id: String): Modifiable
-	class TestBuildable(override val cost: Int): Buildable
+	class TestBuildable(override val buildTime: Int): Buildable
 	
 }

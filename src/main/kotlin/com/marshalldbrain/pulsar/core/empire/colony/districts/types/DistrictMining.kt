@@ -8,6 +8,6 @@ object DistrictMining: DistrictType {
 	override val production: Map<ResourceType, Int> = mapOf(
 		Pair(ResourceMineral, 4)
 	)
-	override val cost: Int = 1
+	override val buildTime: Int = 1
 	
 }
