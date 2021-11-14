@@ -1,12 +1,14 @@
 package com.marshalldbrain.pulsar.core.empire.colony.construction
 
-import com.marshalldbrain.pulsar.core.empire.colony.districts.types.DistrictType
+import com.marshalldbrain.pulsar.core.ion.round
 
 class BuildCoordinator(
 	private val onComplete: (BuildType, Buildable) -> Unit
 ) {
 
 	private val queue = mutableListOf<BuildOrderImpl>()
+	val buildQueue: List<BuildOrder>
+		get() = queue.toList()
 	
 	fun createOrder(type: BuildType, buildable: Buildable, amount: Int) {
 		queue.add(BuildOrderImpl(type, buildable, amount))
@@ -28,6 +30,7 @@ class BuildCoordinator(
 	interface BuildOrder {
 		val type: BuildType
 		val buildable: Buildable
+		val remaining: Double
 	}
 	
 	private class BuildOrderImpl(
@@ -36,6 +39,8 @@ class BuildCoordinator(
 		amount: Int = 1
 	): BuildOrder {
 		
+		override val remaining: Double
+			get() = amount - (progress.toDouble()/type.getBuildTime(buildable)).round(3)
 		private var amount: Int = type.normalizeAmount(amount)
 		private var progress: Int = 0
 		
