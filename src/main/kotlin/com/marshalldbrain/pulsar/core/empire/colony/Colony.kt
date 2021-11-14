@@ -1,7 +1,7 @@
 package com.marshalldbrain.pulsar.core.empire.colony
 
 import com.marshalldbrain.pulsar.core.empire.colony.construction.BuildCoordinator
-import com.marshalldbrain.pulsar.core.empire.colony.construction.BuildOrder
+import com.marshalldbrain.pulsar.core.empire.colony.construction.BuildType
 import com.marshalldbrain.pulsar.core.empire.colony.construction.Buildable
 import com.marshalldbrain.pulsar.core.empire.colony.districts.types.DistrictType
 import com.marshalldbrain.pulsar.core.resource.types.ResourceType
@@ -15,8 +15,8 @@ class Colony(
 	
 	var population = 0
 	
-	fun createBuildOrder(buildable: Buildable, amount: Int) {
-		builder.addOrder(BuildOrder(buildable, amount))
+	fun createBuildOrder(type: BuildType, buildable: Buildable, amount: Int) {
+		builder.createOrder(type, buildable, amount)
 	}
 	
 	fun tick(delta: Int) {
@@ -39,17 +39,17 @@ class Colony(
 		return resourceMap
 	}
 	
-	private fun build(buildable: Buildable) {
+	private fun build(type: BuildType, buildable: Buildable) {
 		when(buildable) {
-			is DistrictType -> districts[buildable] =
-				districts.getOrDefault(buildable, 0) + 1
+			is DistrictType -> when(type) {
+				BuildType.BUILD -> districts[buildable] =
+					districts.getOrDefault(buildable, 0) + 1
+				else -> throw IllegalArgumentException(
+					"The build order ${type}:${buildable::class} is not valid"
+				)
+			}
+			else -> TODO("Not yet implemented")
 		}
-	}
-	
-	companion object {
-		private val maxPopulation = 10
-		private val maxDistricts = 4
-		private val maxBuildings = 10
 	}
 	
 }

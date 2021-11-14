@@ -1,5 +1,6 @@
 package com.marshalldbrain.pulsar.core.empire.colony
 
+import com.marshalldbrain.pulsar.core.empire.colony.construction.BuildType
 import com.marshalldbrain.pulsar.core.empire.colony.districts.types.DistrictMining
 import com.marshalldbrain.pulsar.core.empire.colony.districts.types.DistrictType
 import com.marshalldbrain.pulsar.core.resource.types.ResourceMineral
@@ -9,34 +10,28 @@ import io.kotest.matchers.shouldBe
 
 class ColonyTest : FunSpec({
 	
-	test("District production") {
+	context("Colony creation") {
 		
-		val colony = Colony(
-			mapOf(Pair(DistrictMining, 4))
-		)
-		
-		val production = colony.getProduction()
-		
-		production.shouldContainExactly(
-			mapOf(
-				Pair(ResourceMineral, 16)
+		test("district") {
+			val colony = Colony(mapOf(Pair(DistrictMining, 1)))
+			colony.tick(1)
+			colony.getProduction() shouldContainExactly mapOf(
+				Pair(ResourceMineral, 4)
 			)
-		)
+		}
 		
 	}
 	
-	test("Build district") {
+	context("District orders") {
 		
-		val colony = Colony()
-		colony.createBuildOrder(DistrictMining, 4)
-		colony.tick(4)
-		val production = colony.getProduction()
-		
-		production.shouldContainExactly(
-			mapOf(
-				Pair(ResourceMineral, 16)
+		test("Build district") {
+			val colony = Colony()
+			colony.createBuildOrder(BuildType.BUILD, DistrictMining, 1)
+			colony.tick(1)
+			colony.getProduction() shouldContainExactly mapOf(
+				Pair(ResourceMineral, 4)
 			)
-		)
+		}
 		
 	}
 
