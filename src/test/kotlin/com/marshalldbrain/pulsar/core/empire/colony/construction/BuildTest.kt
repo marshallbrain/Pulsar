@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 
 class BuildTest : FunSpec({
 	
-	var builder = BuildCoordinator { _, _ ->}
+	lateinit var builder: BuildCoordinator
 	
 	beforeEach {
 		builder = BuildCoordinator { _, _ ->}
@@ -63,15 +63,27 @@ class BuildTest : FunSpec({
 	context("Multiple orders") {
 		
 		test("Build single") {
-			TODO("Not yet implemented")
+			builder.createOrder(BuildType.BUILD, HelperClasses.TestBuildable(1), 1)
+			builder.createOrder(BuildType.BUILD, HelperClasses.TestBuildable(1), 1)
+			builder.process(1)
+			
+			builder.buildQueue.size shouldBe 1
 		}
 		
 		test("Overbuild single") {
-			TODO("Not yet implemented")
+			builder.createOrder(BuildType.BUILD, HelperClasses.TestBuildable(1), 1)
+			builder.createOrder(BuildType.BUILD, HelperClasses.TestBuildable(2), 1)
+			builder.process(2)
+			
+			builder.buildQueue.first().remaining shouldBe .5
 		}
 		
 		test("Build multiple") {
-			TODO("Not yet implemented")
+			builder.createOrder(BuildType.BUILD, HelperClasses.TestBuildable(1), 1)
+			builder.createOrder(BuildType.BUILD, HelperClasses.TestBuildable(1), 1)
+			builder.process(2)
+			
+			builder.buildQueue.size shouldBe 0
 		}
 		
 	}
